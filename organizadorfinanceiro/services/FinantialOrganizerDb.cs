@@ -13,22 +13,25 @@ class FinantialOrganizerDb: DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-            .Entity<Account>()
-            .Property(a => a.Type)
-            .HasConversion<string>();
-        modelBuilder
-            .Entity<CreditCard>()
-            .Property(c => c.Brand)
-            .HasConversion<string>();
-        modelBuilder
-            .Entity<CreditCardBill>()
-            .Property(c => c.Status)
-            .HasConversion<string>();
-        modelBuilder
-            .Entity<Transaction>()
-            .Property(c => c.Type)
-            .HasConversion<string>();
+        var accountEntity = modelBuilder.Entity<Account>();
+        var creditCardEntity = modelBuilder.Entity<CreditCard>();
+        var creditCardBillEntity = modelBuilder.Entity<CreditCardBill>();
+        var TransactionEntity = modelBuilder.Entity<Transaction>();
 
+        accountEntity.Property(a => a.Type).HasConversion<string>();
+        accountEntity.Property(a => a.CreatedOn).HasDefaultValueSql("NOW()");
+        accountEntity.Property(a => a.UpdatedOn).HasDefaultValueSql("NOW()");
+
+        creditCardEntity.Property(c => c.Brand).HasConversion<string>();
+        creditCardEntity.Property(c => c.CreatedOn).HasDefaultValueSql("NOW()");
+        creditCardEntity.Property(c => c.UpdatedOn).HasDefaultValueSql("NOW()");
+
+        creditCardBillEntity.Property(c => c.Status).HasConversion<string>();
+        creditCardBillEntity.Property(c => c.CreatedOn).HasDefaultValueSql("NOW()");
+        creditCardBillEntity.Property(c => c.UpdatedOn).HasDefaultValueSql("NOW()");
+
+        TransactionEntity.Property(t => t.Type).HasConversion<string>();
+        TransactionEntity.Property(t => t.CreatedOn).HasDefaultValueSql("NOW()");
+        TransactionEntity.Property(t => t.UpdatedOn).HasDefaultValueSql("NOW()");
     }
 }
